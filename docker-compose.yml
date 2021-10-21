@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  # react-client
+  client:
+    image: 'react-client:latest'
+    build:
+      context: client-blog
+      dockerfile: Dockerfile
+    container_name: client
+    command: npm run start
+    # restart если остановится
+    # restart: unless_stopped
+    ports:
+      - 8080:3000
+
+    # (Переменная среды) process.env.PORT => SERVER
+    # environment: 
+    #   - PORT=3000
+    #   - HOST=http:/realworld-docker.com
+    
+    depends_on:
+     - server
+
+
+
+# spring-server
+  server:
+    image: 'spring-boot-server:latest'
+    ports:
+      - 8099:8099
+    build:
+      context: server-blog\src\main\docker
+      dockerfile: Dockerfile
+    container_name: server
+    # restart: unless_stopped
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5434/myblogsite
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+
+  # db-posergres
+  postgres:
+    build:
+      context: postgres
+      dockerfile: Dockerfile
+    image: 'postgres:12-alpine'
+    ports:
+      - 5434:5434
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=myblogsite
+      - POSTGRES_PASSWORD=root
+    volumes:
+    - "db-data:/var/lib/postgresql/data"
+
+volumes:
+   db-data:

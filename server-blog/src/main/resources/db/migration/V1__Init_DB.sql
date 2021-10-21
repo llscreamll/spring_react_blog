@@ -1,0 +1,30 @@
+-- CREATE TABLE users
+-- (
+--     id  INTEGER  AUTO_INCREMENT,
+--     name varchar(50)  NOT NULL,
+--     login varchar(50)  NOT NULL,
+--     email varchar(50) NOT NULL,
+--     password varchar(100)  NOT NULL,
+--     status varchar(150) NOT NULL,
+--     role     varchar(10)  NOT NULL,
+--     PRIMARY KEY (id)
+-- );
+--
+-- CREATE TABLE blog
+-- (
+--     id integer  AUTO_INCREMENT,
+--     title varchar(255) NOT NULL,
+--     text varchar NOT NULL ,
+--     user_id integer ,
+--
+--
+--
+--
+--     user_id  integer  NOT NULL ,
+--     car_id   integer  NOT NULL,
+--     price decimal  NOT NULL,
+--     creation_date_order DATE  NOT NULL,
+--     canceled_order boolean default false NOT NULL,
+--     PRIMARY KEY(id),
+--     FOREIGN KEY (user_id) REFERENCES USERS (id)
+-- );
